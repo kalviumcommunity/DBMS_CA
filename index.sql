@@ -38,7 +38,7 @@ CREATE TABLE LocationTable (
 );
 
 CREATE TABLE Users (
-    UserID INT PRIMARY KEY,
+    UserID INT PRIMARY KEY, 
     FirstName VARCHAR(255),
     LastName VARCHAR(255),
     Username VARCHAR(50),
@@ -77,3 +77,18 @@ ALTER TABLE Suppliers
 ADD COLUMN NewColumn VARCHAR(50);
 
 DROP TABLE IF EXISTS Dummy;
+
+INSERT INTO Suppliers (SupplierID, UserID, ProductID, TransactionID, WarehouseID, SupplierName, Email, PhoneNumber, Address)
+VALUES (1, 1, 1, 1, 1, 'Supplier 1', 'supplier1@email.com', '1234567890', '123 Address St.');
+
+
+INSERT INTO Warehouses (WarehouseID, WarehouseName, LocationID, SupplierID, RentalRate, ProductID, Description)
+VALUES (1, 'Warehouse A', 1, 1, 100.00, 1, 'Description for Warehouse A');
+
+
+UPDATE Suppliers
+SET Email = 'saksham.agarwal@gmail.com', PhoneNumber = '1234567890', Address = 'Lovely Professional University'
+WHERE SupplierID = 1;
+
+DELETE FROM Suppliers
+WHERE SupplierID = 1;
