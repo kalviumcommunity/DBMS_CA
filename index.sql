@@ -14,7 +14,7 @@ CREATE TABLE Warehouses (
     WarehouseID INT PRIMARY KEY,
     WarehouseName VARCHAR(255),
     LocationID INT,
-    SupplierID INT,
+    SupplierID INT, 
     RentalRate DECIMAL(10, 2),
     ProductID INT,
     Description TEXT
@@ -79,7 +79,10 @@ ADD COLUMN NewColumn VARCHAR(50);
 DROP TABLE IF EXISTS Dummy;
 
 INSERT INTO Suppliers (SupplierID, UserID, ProductID, TransactionID, WarehouseID, SupplierName, Email, PhoneNumber, Address)
-VALUES (1, 1, 1, 1, 1, 'Supplier 1', 'supplier1@email.com', '1234567890', '123 Address St.');
+VALUES (1, 1, 1, 1, 1, 'Supplier 1', 'supplier1@email.com', '9087654321', '123 Address St.');
+
+INSERT INTO Suppliers (SupplierID, UserID, ProductID, TransactionID, WarehouseID, SupplierName, Email, PhoneNumber, Address)
+VALUES (2, 2, 2, 2, 2, 'Supplier 2', 'supplier2@email.com', '1230987456', '456 Address St.');
 
 
 INSERT INTO Warehouses (WarehouseID, WarehouseName, LocationID, SupplierID, RentalRate, ProductID, Description)
@@ -91,4 +94,28 @@ SET Email = 'saksham.agarwal@gmail.com', PhoneNumber = '1234567890', Address = '
 WHERE SupplierID = 1;
 
 DELETE FROM Suppliers
-WHERE SupplierID = 1;
+WHERE SupplierID = 2;
+
+CREATE TABLE RentalHistory (
+    RentalID INT PRIMARY KEY,
+    StartDate DATE,
+    EndDate DATE,
+    ProductID INT,
+    WarehouseID INT,
+    SupplierID INT
+);
+
+ALTER TABLE Warehouses
+ADD COLUMN IsAvailable BOOLEAN;
+
+UPDATE Warehouses
+SET IsAvailable = TRUE;
+
+SELECT w.WarehouseName, s.SupplierName
+FROM Warehouses w
+JOIN RentalHistory rh ON w.WarehouseID = rh.WarehouseID
+JOIN Suppliers s ON rh.SupplierID = s.SupplierID
+
+SELECT WarehouseName
+FROM Warehouses
+WHERE RentalRate = (SELECT MAX(RentalRate) FROM Warehouses);
