@@ -148,3 +148,9 @@ JOIN Suppliers s ON rh.SupplierID = s.SupplierID
 SELECT WarehouseName
 FROM Warehouses
 WHERE RentalRate = (SELECT MAX(RentalRate) FROM Warehouses);
+
+CREATE ROLE SupplierRole;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON Suppliers TO SupplierRole;
+
+REVOKE DELETE ON Suppliers FROM SupplierRole;
