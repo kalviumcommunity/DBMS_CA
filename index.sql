@@ -119,3 +119,5 @@ JOIN Suppliers s ON rh.SupplierID = s.SupplierID
 SELECT WarehouseName
 FROM Warehouses
 WHERE RentalRate = (SELECT MAX(RentalRate) FROM Warehouses);
+
+-- hyrhyybgdbgdgdg
