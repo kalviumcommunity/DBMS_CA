@@ -20,6 +20,25 @@ CREATE TABLE Warehouses (
     Description TEXT
 );
 
+CREATE TABLE WarehouseInfo (
+    WarehouseID INT PRIMARY KEY,
+    WarehouseName VARCHAR(255),
+    LocationID INT,
+    SupplierID INT,
+    RentalRate DECIMAL(10, 2),
+    Description TEXT,
+    FOREIGN KEY (LocationID) REFERENCES LocationTable(LocationID),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+
+CREATE TABLE WarehouseProducts (
+    WarehouseID INT,
+    ProductID INT,
+    PRIMARY KEY (WarehouseID, ProductID),
+    FOREIGN KEY (WarehouseID) REFERENCES WarehouseInfo(WarehouseID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
 CREATE TABLE Products (
     ProductID INT PRIMARY KEY,
     ProductName VARCHAR(255),
@@ -28,6 +47,16 @@ CREATE TABLE Products (
     WarehouseID INT,
     Description TEXT
 );
+
+CREATE TABLE ProductInfo (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(255),
+    Quantity INT,
+    Description TEXT,
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID),
+    FOREIGN KEY (WarehouseID) REFERENCES WarehouseInfo(WarehouseID)
+);
+
 
 CREATE TABLE LocationTable (
     LocationID INT PRIMARY KEY,
@@ -119,5 +148,3 @@ JOIN Suppliers s ON rh.SupplierID = s.SupplierID
 SELECT WarehouseName
 FROM Warehouses
 WHERE RentalRate = (SELECT MAX(RentalRate) FROM Warehouses);
-
--- hyrhyybgdbgdgdg
